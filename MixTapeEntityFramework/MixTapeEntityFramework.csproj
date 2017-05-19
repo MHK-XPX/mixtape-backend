@@ -60,6 +60,7 @@
     <Compile Include="ALBUM.cs" />
     <Compile Include="ALBUM_RATING.cs" />
     <Compile Include="ARTIST.cs" />
+    <Compile Include="Controller\ArtistController.cs" />
     <Compile Include="MixTapeModel.cs" />
     <Compile Include="PLAYLIST.cs" />
     <Compile Include="PLAYLIST_SONG.cs" />
