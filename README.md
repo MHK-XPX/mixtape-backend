@@ -1,14 +1,19 @@
-# mixtape-backend
+# MixTape - Backend
 
-This is the repo for the backend of mixtape, a music meta-data catalog learning project. 
+RESTful web service for MixTape.
+
+A music meta-data catalog learning project.
 
 ## Stack
 
-- C# ASP.net Web api 
-- Entity ORM
-- Mysql
+- C# / MySql
+- ASP.NET Core Web API 
+- Entity Framework Core
 
-## Todo:
+### Dependencies
 
-- draft restful api
-- create project w/ gitignore file and initial layout
+- Visual Studio 2017 w/ .NET Core cross-platform development workload
+
+### Adapters Used
+
+- Pomelo.EntityFrameworkCore.MySql - https://github.com/PomeloFoundation/Pomelo.EntityFrameworkCore.MySql
