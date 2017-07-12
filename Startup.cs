@@ -26,7 +26,7 @@ namespace mixtape
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            services.AddMvc();
+            services.AddMvc().AddJsonOptions(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             // Add Entity
             var connection = @"INSERT CONNECTION STRING HERE";

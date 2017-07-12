@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using mixtape.Models;
@@ -24,7 +22,11 @@ namespace mixtape.Controllers
         [HttpGet]
         public IEnumerable<User> GetUser()
         {
-            return _context.User;
+            return _context.User
+                .Include(m => m.AlbumRating)
+                .Include(m => m.Playlist)
+                .Include(m => m.SongRating)
+                .ToList();
         }
 
         // GET: api/Users/5
@@ -37,6 +39,9 @@ namespace mixtape.Controllers
             }
 
             var user = await _context.User.SingleOrDefaultAsync(m => m.UserId == id);
+            await _context.Entry(user).Collection(m => m.AlbumRating).LoadAsync();
+            await _context.Entry(user).Collection(m => m.Playlist).LoadAsync();
+            await _context.Entry(user).Collection(m => m.SongRating).LoadAsync();
 
             if (user == null)
             {
