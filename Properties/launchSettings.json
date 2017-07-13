@@ -15,8 +15,13 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "mixtape-frontend-web": {
-      "commandName": "Project"
+    "mixtape": {
+      "commandName": "Project",
+	  "launchBrowser": false,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://localhost:49743"
     }
   }
 }
