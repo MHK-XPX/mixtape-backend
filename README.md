@@ -1,5 +1,7 @@
 # MixTape - Backend
 
+[![Build Status](https://travis-ci.org/MHK-XPX/mixtape-backend.svg?branch=master)](https://travis-ci.org/MHK-XPX/mixtape-backend)
+
 RESTful web service for MixTape.
 
 A music meta-data catalog learning project.
