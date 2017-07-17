@@ -28,8 +28,10 @@ namespace mixtape
             // Add framework services.
             services.AddMvc().AddJsonOptions(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
+            services.AddCors();
+
             // Add Entity
-            var connection = @"INSERT CONNECTION STRING HERE";
+            var connection = @"server = 192.168.168.48; user id = mixTapeUser; password = mixTape123; database = mixtape;"; //@"INSERT CONNECTION STRING HERE";
             services.AddDbContext<mixtapeContext>(options => options.UseMySql(connection));
         }
 
@@ -38,6 +40,12 @@ namespace mixtape
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+
+            app.UseCors(builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials());
 
             app.UseMvc(routes =>
             {

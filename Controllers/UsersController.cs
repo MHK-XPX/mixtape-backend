@@ -42,6 +42,7 @@ namespace mixtape.Controllers
             await _context.Entry(user).Collection(m => m.AlbumRating).LoadAsync();
             await _context.Entry(user).Collection(m => m.Playlist).LoadAsync();
             await _context.Entry(user).Collection(m => m.SongRating).LoadAsync();
+            await _context.Playlist.Include(m => m.PlaylistSong).ToListAsync();
 
             if (user == null)
             {
