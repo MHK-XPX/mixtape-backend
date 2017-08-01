@@ -31,7 +31,7 @@ namespace mixtape
             services.AddCors();
 
             // Add Entity
-            var connection = @"server = 192.168.168.48; user id = mixTapeUser; password = mixTape123; database = mixtape;"; //@"INSERT CONNECTION STRING HERE";
+            var connection = @"INSERT CONNECTION STRING HERE";
             services.AddDbContext<mixtapeContext>(options => options.UseMySql(connection));
         }
 

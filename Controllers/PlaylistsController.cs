@@ -38,6 +38,7 @@ namespace mixtape.Controllers
 
             var playlist = await _context.Playlist.SingleOrDefaultAsync(m => m.PlaylistId == id);
             await _context.Entry(playlist).Collection(m => m.PlaylistSong).LoadAsync();
+            await _context.PlaylistSong.Include(m => m.Song).LoadAsync(); // I added this
 
             if (playlist == null)
             {
