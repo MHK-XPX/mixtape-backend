@@ -1,10 +1,8 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
 
-namespace mixtape.Models
+namespace Mixtape.Models
 {
-    public partial class mixtapeContext : DbContext
+    public partial class DataContext : DbContext
     {
         public virtual DbSet<Album> Album { get; set; }
         public virtual DbSet<AlbumRating> AlbumRating { get; set; }
@@ -15,7 +13,7 @@ namespace mixtape.Models
         public virtual DbSet<SongRating> SongRating { get; set; }
         public virtual DbSet<User> User { get; set; }
 
-        public mixtapeContext(DbContextOptions<mixtapeContext> options) : base(options) { }
+        public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

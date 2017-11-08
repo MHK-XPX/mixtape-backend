@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace mixtape.Models
+namespace Mixtape.Models
 {
     public partial class Playlist
     {

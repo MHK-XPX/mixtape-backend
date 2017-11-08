@@ -8,14 +8,9 @@ A music meta-data catalog learning project.
 
 ## Stack
 
-- C# / MySql
-- ASP.NET Core Web API 
-- Entity Framework Core
+- ASP.NET Core 2.0 - C#
+- Entity Framework Core w/ MySQL
 
-### Dependencies
-
-- Visual Studio 2017 w/ .NET Core cross-platform development workload
-
-### Adapters Used
+### Adapter Used
 
 - Pomelo.EntityFrameworkCore.MySql - https://github.com/PomeloFoundation/Pomelo.EntityFrameworkCore.MySql

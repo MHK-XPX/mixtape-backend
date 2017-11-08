@@ -3,17 +3,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using mixtape.Models;
 
-namespace mixtape.Controllers
+using Mixtape.Models;
+
+namespace Mixtape.Controllers
 {
     [Produces("application/json")]
     [Route("api/Artists")]
     public class ArtistsController : Controller
     {
-        private readonly mixtapeContext _context;
+        private readonly DataContext _context;
 
-        public ArtistsController(mixtapeContext context)
+        public ArtistsController(DataContext context)
         {
             _context = context;
         }
