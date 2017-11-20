@@ -19,7 +19,7 @@ namespace Mixtape.Models
         {
             modelBuilder.Entity<Album>(entity =>
             {
-                entity.ToTable("ALBUM");
+                entity.ToTable("album");
 
                 entity.HasIndex(e => e.ArtistId)
                     .HasName("ARTIST_ID");
@@ -54,7 +54,7 @@ namespace Mixtape.Models
 
             modelBuilder.Entity<AlbumRating>(entity =>
             {
-                entity.ToTable("ALBUM_RATING");
+                entity.ToTable("album_rating");
 
                 entity.HasIndex(e => e.AlbumId)
                     .HasName("ALBUM_ID");
@@ -98,7 +98,7 @@ namespace Mixtape.Models
 
             modelBuilder.Entity<Artist>(entity =>
             {
-                entity.ToTable("ARTIST");
+                entity.ToTable("artist");
 
                 entity.HasIndex(e => e.Name)
                     .HasName("NAME_UNIQUE")
@@ -116,7 +116,7 @@ namespace Mixtape.Models
 
             modelBuilder.Entity<Playlist>(entity =>
             {
-                entity.ToTable("PLAYLIST");
+                entity.ToTable("playlist");
 
                 entity.HasIndex(e => e.UserId)
                     .HasName("USER_ID");
@@ -148,7 +148,7 @@ namespace Mixtape.Models
 
             modelBuilder.Entity<PlaylistSong>(entity =>
             {
-                entity.ToTable("PLAYLIST_SONG");
+                entity.ToTable("playlist_song");
 
                 entity.HasIndex(e => e.PlaylistId)
                     .HasName("PLAYLIST_ID");
@@ -183,7 +183,7 @@ namespace Mixtape.Models
 
             modelBuilder.Entity<Song>(entity =>
             {
-                entity.ToTable("SONG");
+                entity.ToTable("song");
 
                 entity.HasIndex(e => e.AlbumId)
                     .HasName("ALBUM_ID");
@@ -240,7 +240,7 @@ namespace Mixtape.Models
 
             modelBuilder.Entity<SongRating>(entity =>
             {
-                entity.ToTable("SONG_RATING");
+                entity.ToTable("song_rating");
 
                 entity.HasIndex(e => e.SongId)
                     .HasName("SONG_ID");
@@ -284,7 +284,7 @@ namespace Mixtape.Models
 
             modelBuilder.Entity<User>(entity =>
             {
-                entity.ToTable("USER");
+                entity.ToTable("user");
 
                 entity.HasIndex(e => e.Username)
                     .HasName("USERNAME_UNIQUE")
