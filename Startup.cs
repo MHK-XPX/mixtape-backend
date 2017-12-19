@@ -66,7 +66,7 @@ namespace Mixtape
                         .AllowAnyOrigin()
                         .AllowAnyMethod()
                         .AllowAnyHeader()
-                        .AllowCredentials()
+                        .AllowCredentials();
                     });
             });
 
