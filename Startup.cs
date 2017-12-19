@@ -57,7 +57,18 @@ namespace Mixtape
                 };
             });
 
-            services.AddCors();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll",
+                    builder =>
+                    {
+                        builder
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials()
+                    });
+            });
 
             services.AddMvc()
                 .AddJsonOptions(
@@ -83,11 +94,7 @@ namespace Mixtape
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors(builder => builder
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader()
-                .AllowCredentials());
+            app.UseCors("AllowAll");
 
             app.UseAuthentication();
 
