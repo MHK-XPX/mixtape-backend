@@ -61,10 +61,10 @@ namespace mixtape.Controllers
         /// <response code="400">Error model</response>
         [Authorize]
         [HttpGet("me")]
-        [ProducesResponseType(typeof(User), 200)]
-        [ProducesResponseType(typeof(Error), 400)]
-        [SwaggerResponse(200, Type = typeof(User), Description = "User is authenticated")]
-        [SwaggerResponse(400, Type = typeof(Error), Description = "Bad Request")]
+        //[ProducesResponseType(typeof(User), 200)]
+        //[ProducesResponseType(typeof(Error), 400)]
+        //[SwaggerResponse(200, Type = typeof(User), Description = "User is authenticated")]
+        //[SwaggerResponse(400, Type = typeof(Error), Description = "Bad Request")]
         public IActionResult Get()
         {
             string id = HttpContext.User.Claims.First().Value;
@@ -83,10 +83,10 @@ namespace mixtape.Controllers
         /// <response code="200">Authenticated User</response>
         /// <response code="400">Error model</response>
         [HttpPost("login")]
-        [ProducesResponseType(typeof(AuthUser), 200)]
-        [ProducesResponseType(typeof(Error), 400)]
-        [SwaggerResponse(200, Type = typeof(AuthUser), Description = "User is authenticated")]
-        [SwaggerResponse(400, Type = typeof(Error), Description = "Bad Request")]
+        //[ProducesResponseType(typeof(AuthUser), 200)]
+        //[ProducesResponseType(typeof(Error), 400)]
+        //[SwaggerResponse(200, Type = typeof(AuthUser), Description = "User is authenticated")]
+        //[SwaggerResponse(400, Type = typeof(Error), Description = "Bad Request")]
         public IActionResult Login([FromBody]LoginUser user)
         {
             string username = user.Username;

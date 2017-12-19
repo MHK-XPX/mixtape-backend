@@ -34,10 +34,10 @@ namespace Mixtape.Controllers
         /// <response code="200">User entities</response>
         /// <response code="400">Error model</response>
         [HttpGet]
-        [ProducesResponseType(typeof(ICollection<User>), 200)]
-        [ProducesResponseType(typeof(Error), 400)]
-        [SwaggerResponse(200, Type = typeof(User), Description = "User objects returned successfully")]
-        [SwaggerResponse(400, Type = typeof(Error), Description = "Bad Request")]
+        //[ProducesResponseType(typeof(ICollection<User>), 200)]
+        //[ProducesResponseType(typeof(Error), 400)]
+        //[SwaggerResponse(200, Type = typeof(User), Description = "User objects returned successfully")]
+        //[SwaggerResponse(400, Type = typeof(Error), Description = "Bad Request")]
         public IEnumerable<User> GetUser()
         {
             return _context.User;
@@ -52,10 +52,10 @@ namespace Mixtape.Controllers
         /// <response code="200">User entity</response>
         /// <response code="400">Error model</response>
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(User), 200)]
-        [ProducesResponseType(typeof(Error), 400)]
-        [SwaggerResponse(200, Type = typeof(User), Description = "User object returned successfully")]
-        [SwaggerResponse(400, Type = typeof(Error), Description = "Bad Request")]
+        //[ProducesResponseType(typeof(User), 200)]
+        //[ProducesResponseType(typeof(Error), 400)]
+        //[SwaggerResponse(200, Type = typeof(User), Description = "User object returned successfully")]
+        //[SwaggerResponse(400, Type = typeof(Error), Description = "Bad Request")]
         public async Task<IActionResult> GetUser([FromRoute] int id)
         {
             if (!ModelState.IsValid)
@@ -83,10 +83,10 @@ namespace Mixtape.Controllers
         /// <response code="200">User sucessfully updated</response>
         /// <response code="400">Error model</response>
         [HttpPut("{id}")]
-        [ProducesResponseType(typeof(User), 200)]
-        [ProducesResponseType(typeof(Error), 400)]
-        [SwaggerResponse(200, Type = typeof(User), Description = "User updated successfully")]
-        [SwaggerResponse(400, Type = typeof(Error), Description = "Bad Request")]
+        //[ProducesResponseType(typeof(User), 200)]
+        //[ProducesResponseType(typeof(Error), 400)]
+        //[SwaggerResponse(200, Type = typeof(User), Description = "User updated successfully")]
+        //[SwaggerResponse(400, Type = typeof(Error), Description = "Bad Request")]
         public async Task<IActionResult> PutUser([FromRoute] int id, [FromBody] User user)
         {
             if (!ModelState.IsValid)
@@ -129,10 +129,10 @@ namespace Mixtape.Controllers
         /// <response code="201">User sucessfully created</response>
         /// <response code="400">Error model</response>
         [HttpPost]
-        [ProducesResponseType(typeof(User), 201)]
-        [ProducesResponseType(typeof(Error), 400)]
-        [SwaggerResponse(201, Type = typeof(User), Description = "User successfully created")]
-        [SwaggerResponse(400, Type = typeof(Error), Description = "Bad Request")]
+        //[ProducesResponseType(typeof(User), 201)]
+        //[ProducesResponseType(typeof(Error), 400)]
+        //[SwaggerResponse(201, Type = typeof(User), Description = "User successfully created")]
+        //[SwaggerResponse(400, Type = typeof(Error), Description = "Bad Request")]
         public async Task<IActionResult> PostUser([FromBody] User user)
         {
             if (!ModelState.IsValid)
@@ -155,10 +155,10 @@ namespace Mixtape.Controllers
         /// <response code="200">User sucessfully deleted</response>
         /// <response code="400">Error model</response>
         [HttpDelete("{id}")]
-        [ProducesResponseType(typeof(User), 200)]
-        [ProducesResponseType(typeof(Error), 400)]
-        [SwaggerResponse(200, Type = typeof(User), Description = "User deleted successfully")]
-        [SwaggerResponse(400, Type = typeof(Error), Description = "Bad Request")]
+        //[ProducesResponseType(typeof(User), 200)]
+        //[ProducesResponseType(typeof(Error), 400)]
+        //[SwaggerResponse(200, Type = typeof(User), Description = "User deleted successfully")]
+        //[SwaggerResponse(400, Type = typeof(Error), Description = "Bad Request")]
         public async Task<IActionResult> DeleteUser([FromRoute] int id)
         {
             if (!ModelState.IsValid)

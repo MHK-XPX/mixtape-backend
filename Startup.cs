@@ -75,13 +75,13 @@ namespace Mixtape
                     options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
                 );
 
-            services.AddSwaggerGen(options =>
+            /*services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new Info { Title = "MY API", Version = "v1" });
                 var basePath = PlatformServices.Default.Application.ApplicationBasePath;
                 var xmlPath = Path.Combine(basePath, "mixtape.xml");
                 options.IncludeXmlComments(xmlPath);
-            });
+            });*/
 
 
         }
@@ -100,12 +100,12 @@ namespace Mixtape
 
             app.UseMvc();
 
-            app.UseSwagger();
+            /*app.UseSwagger();
 
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Mixtape API");
-            });
+            });*/
         }
     }
 }
