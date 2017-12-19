@@ -23,10 +23,7 @@ namespace Mixtape.Controllers
         [HttpGet]
         public IEnumerable<Album> GetAlbum()
         {
-            return _context.Album
-                .Include(m => m.AlbumRating)
-                .Include(m => m.Song)
-                .ToList();
+            return _context.Album;
         }
 
         // GET: api/Albums/5
@@ -39,8 +36,6 @@ namespace Mixtape.Controllers
             }
 
             var album = await _context.Album.SingleOrDefaultAsync(m => m.AlbumId == id);
-            await _context.Entry(album).Collection(m => m.AlbumRating).LoadAsync();
-            await _context.Entry(album).Collection(m => m.Song).LoadAsync();
 
             if (album == null)
             {

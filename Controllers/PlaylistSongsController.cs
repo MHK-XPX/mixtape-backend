@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 using Mixtape.Models;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using Microsoft.Azure.KeyVault.Models;
 
 namespace Mixtape.Controllers
 {
@@ -20,14 +22,35 @@ namespace Mixtape.Controllers
         }
 
         // GET: api/PlaylistSongs
+        /// <summary>
+        /// Get all playlistsongs
+        /// </summary>
+        /// <returns>All playlistsong entities</returns>
+        /// <response code="200">Playlistsong entities</response>
+        /// <response code="400">Error model</response>
         [HttpGet]
+        [ProducesResponseType(typeof(ICollection<PlaylistSong>), 200)]
+        [ProducesResponseType(typeof(Error), 400)]
+        [SwaggerResponse(200, Type = typeof(PlaylistSong), Description = "Playlistsong objects returned successfully")]
+        [SwaggerResponse(400, Type = typeof(Error), Description = "Bad Request")]
         public IEnumerable<PlaylistSong> GetPlaylistSong()
         {
             return _context.PlaylistSong;
         }
 
         // GET: api/PlaylistSongs/5
+        /// <summary>
+        /// Get a given playlistsong
+        /// </summary>
+        /// <param name="id">ID of the playlistsong</param>
+        /// <returns>A given playlistsong entity</returns>
+        /// <response code="200">Playlistsong entity</response>
+        /// <response code="400">Error model</response>
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(PlaylistSong), 200)]
+        [ProducesResponseType(typeof(Error), 400)]
+        [SwaggerResponse(200, Type = typeof(PlaylistSong), Description = "Playlistsong object returned successfully")]
+        [SwaggerResponse(400, Type = typeof(Error), Description = "Bad Request")]
         public async Task<IActionResult> GetPlaylistSong([FromRoute] int id)
         {
             if (!ModelState.IsValid)
@@ -46,7 +69,19 @@ namespace Mixtape.Controllers
         }
 
         // PUT: api/PlaylistSongs/5
+        /// <summary>
+        /// Updates a given playlistsong
+        /// </summary>
+        /// <param name="id">ID of the playlistsong</param>
+        /// <param name="playlistSong">The updated playlistsong entity</param>
+        /// <returns>A new playlistsong object</returns>
+        /// <response code="200">Playlistsong sucessfully updated</response>
+        /// <response code="400">Error model</response>
         [HttpPut("{id}")]
+        [ProducesResponseType(typeof(PlaylistSong), 200)]
+        [ProducesResponseType(typeof(Error), 400)]
+        [SwaggerResponse(200, Type = typeof(PlaylistSong), Description = "User updated successfully")]
+        [SwaggerResponse(400, Type = typeof(Error), Description = "Bad Request")]
         public async Task<IActionResult> PutPlaylistSong([FromRoute] int id, [FromBody] PlaylistSong playlistSong)
         {
             if (!ModelState.IsValid)
@@ -81,7 +116,18 @@ namespace Mixtape.Controllers
         }
 
         // POST: api/PlaylistSongs
+        /// <summary>
+        /// Creates a new playlistsong
+        /// </summary>
+        /// <param name="playlistSong">The new playlistsong to post</param>
+        /// <returns>An empty object</returns>
+        /// <response code="201">Playlistsong sucessfully created</response>
+        /// <response code="400">Error model</response>
         [HttpPost]
+        [ProducesResponseType(typeof(PlaylistSong), 201)]
+        [ProducesResponseType(typeof(Error), 400)]
+        [SwaggerResponse(201, Type = typeof(PlaylistSong), Description = "Playlistsong successfully created")]
+        [SwaggerResponse(400, Type = typeof(Error), Description = "Bad Request")]
         public async Task<IActionResult> PostPlaylistSong([FromBody] PlaylistSong playlistSong)
         {
             if (!ModelState.IsValid)
@@ -96,7 +142,18 @@ namespace Mixtape.Controllers
         }
 
         // DELETE: api/PlaylistSongs/5
+        /// <summary>
+        /// Delete a given playlistsong
+        /// </summary>
+        /// <param name="id">ID of the user</param>
+        /// <returns>An empty object</returns>
+        /// <response code="200">User sucessfully deleted</response>
+        /// <response code="400">Error model</response>
         [HttpDelete("{id}")]
+        [ProducesResponseType(typeof(PlaylistSong), 200)]
+        [ProducesResponseType(typeof(Error), 400)]
+        [SwaggerResponse(200, Type = typeof(PlaylistSong), Description = "Playlistsong deleted successfully")]
+        [SwaggerResponse(400, Type = typeof(Error), Description = "Bad Request")]
         public async Task<IActionResult> DeletePlaylistSong([FromRoute] int id)
         {
             if (!ModelState.IsValid)

@@ -23,11 +23,7 @@ namespace Mixtape.Controllers
         [HttpGet]
         public IEnumerable<Artist> GetArtist()
         {
-            return _context.Artist
-                .Include(m => m.Album)
-                .Include(m => m.SongArtist)
-                .Include(m => m.SongFeaturedArtist)
-                .ToList();
+            return _context.Artist;
         }
 
         // GET: api/Artists/5
@@ -40,9 +36,6 @@ namespace Mixtape.Controllers
             }
 
             var artist = await _context.Artist.SingleOrDefaultAsync(m => m.ArtistId == id);
-            await _context.Entry(artist).Collection(m => m.Album).LoadAsync();
-            await _context.Entry(artist).Collection(m => m.SongArtist).LoadAsync();
-            await _context.Entry(artist).Collection(m => m.SongFeaturedArtist).LoadAsync();
 
             if (artist == null)
             {

@@ -23,10 +23,7 @@ namespace Mixtape.Controllers
         [HttpGet]
         public IEnumerable<Song> GetSong()
         {
-            return _context.Song
-                .Include(m => m.PlaylistSong)
-                .Include(m => m.SongRating)
-                .ToList();
+            return _context.Song;
         }
 
         // GET: api/Songs/5
@@ -39,8 +36,6 @@ namespace Mixtape.Controllers
             }
 
             var song = await _context.Song.SingleOrDefaultAsync(m => m.SongId == id);
-            await _context.Entry(song).Collection(m => m.PlaylistSong).LoadAsync();
-            await _context.Entry(song).Collection(m => m.SongRating).LoadAsync();
 
             if (song == null)
             {
