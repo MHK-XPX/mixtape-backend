@@ -45,6 +45,33 @@ namespace Mixtape.Controllers
             return Ok(artist);
         }
 
+        //GET: api/Artists/Spec/5
+        /// <summary>
+        /// Returns an Artist with all of their albums AND songs per album
+        /// </summary>
+        /// <param name="id">The ID of the artist</param>
+        /// <returns></returns>
+        [HttpGet("Spec/{id}")]
+        public async Task<IActionResult> GetSpecificArtist([FromRoute] int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var artist = await _context.Artist
+                                 .Include(alb => alb.Album)
+                                    .ThenInclude(s => s.Song)
+                                .SingleOrDefaultAsync(m => m.ArtistId == id);
+
+            if (artist == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(artist);
+        }
+
         // PUT: api/Artists/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutArtist([FromRoute] int id, [FromBody] Artist artist)
