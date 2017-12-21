@@ -8,6 +8,7 @@ using Mixtape.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Microsoft.Azure.KeyVault.Models;
 using Microsoft.AspNetCore.Authorization;
+using System.Collections.ObjectModel;
 
 namespace Mixtape.Controllers
 {
@@ -18,7 +19,7 @@ namespace Mixtape.Controllers
         private readonly DataContext _context;
 
         /// <summary>
-        /// TEST ETST
+        /// 
         /// </summary>
         /// <param name="context"></param>
         public UsersController(DataContext context)
@@ -137,6 +138,15 @@ namespace Mixtape.Controllers
         {
             if (!ModelState.IsValid)
             {
+                return BadRequest(ModelState);
+            }
+
+            User _user = _context.User.SingleOrDefault(x => x.Username == user.Username);
+
+            //If the username is already taken we return a 400 error
+            if(_user != null)
+            {
+                ModelState.AddModelError("Error", "Username already taken");
                 return BadRequest(ModelState);
             }
 
