@@ -188,6 +188,21 @@ namespace Mixtape.Controllers
             return Ok(user);
         }
 
+        // api/Users/Check/<username>
+        [HttpGet("Check/{username}")]
+        public async Task<IActionResult> CheckForUsername([FromRoute] string username)
+        {
+            User _user = _context.User.SingleOrDefault(x => x.Username == username);
+
+            //If the username is already taken we return a 400 error
+            if (_user != null)
+            {
+                ModelState.AddModelError("Error", "Username already taken");
+                return BadRequest(ModelState);
+            }
+
+            return Ok();
+        }
         private bool UserExists(int id)
         {
             return _context.User.Any(e => e.UserId == id);
