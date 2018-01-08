@@ -35,7 +35,9 @@ namespace Mixtape.Controllers
                 return BadRequest(ModelState);
             }
 
-            var album = await _context.Album.SingleOrDefaultAsync(m => m.AlbumId == id);
+            var album = await _context.Album
+                                .Include(albumSong => albumSong.Song)
+                                .SingleOrDefaultAsync(m => m.AlbumId == id);
 
             if (album == null)
             {
