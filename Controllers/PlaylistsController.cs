@@ -5,8 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 using Mixtape.Models;
-using Swashbuckle.AspNetCore.SwaggerGen;
-using Microsoft.Azure.KeyVault.Models;
 using System;
 using Microsoft.AspNetCore.Authorization;
 
@@ -168,11 +166,26 @@ namespace Mixtape.Controllers
             }
 
             var playlist = await _context.Playlist.SingleOrDefaultAsync(m => m.PlaylistId == id);
+
             if (playlist == null)
             {
                 return NotFound();
             }
 
+            //If the playlist contains playlist songs, we must delete them first
+            var plsList = await _context.PlaylistSong
+                            .Where(m => m.PlaylistId == playlist.PlaylistId)
+                            .AsNoTracking().ToListAsync();
+
+            if(plsList != null || plsList.Count > 0)
+            {
+                foreach(PlaylistSong pls in plsList)
+                {
+                    _context.PlaylistSong.Remove(pls);
+                }
+            }
+
+            //once the playlist songs are deleted we can delete the playlist
             _context.Playlist.Remove(playlist);
             await _context.SaveChangesAsync();
 
@@ -201,13 +214,6 @@ namespace Mixtape.Controllers
                 return BadRequest(ModelState);
             }
 
-            //var playlist = await _context.Playlist.SingleOrDefaultAsync(m => m.PlaylistId == id);
-            /*var playlist[] = await _context.Playlist
-                                        .Include(pls => pls.PlaylistSong)
-                                            .ThenInclude(s => s.Song)
-                                        .AsNoTracking() //Read only so we do not need to save it => AsNoTracking
-                                        .
-                                        //.FirstOrDefaultAsync(m => m.UserId == userId)*/
             var playlists = await _context.Playlist
                                     .Include(pls => pls.PlaylistSong)
                                            .ThenInclude(s => s.Song)
