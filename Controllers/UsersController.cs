@@ -96,14 +96,13 @@ namespace Mixtape.Controllers
                 return BadRequest();
             }
 
-            //Get the old user data
-            var oldUserData = await _context.User.SingleOrDefaultAsync(m => m.UserId == id);
-
-            //If the user's password was not actually changed, then we need to set it to their current
-            //password, otherwise, it will be set as null (THERE MAY BE A BETTER WAY!)
+            /*
+             * For some reason, when we set the object to modified, if we give it a null field, it will set it to null (even if blank as well)
+             * There is probably a better way of doing this, but for now this will work
+             */
             if (user.Password == null || user.Password.Length <= 0)
             {
-                user.Password = oldUserData.Password;
+                user.Password = _context.User.SingleOrDefault(m => m.UserId == id).Password;
             }
 
             _context.Entry(user).State = EntityState.Modified;
