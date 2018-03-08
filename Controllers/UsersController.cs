@@ -100,10 +100,27 @@ namespace Mixtape.Controllers
              * For some reason, when we set the object to modified, if we give it a null field, it will set it to null (even if blank as well)
              * There is probably a better way of doing this, but for now this will work
              */
+            if (user.FirstName == null || user.FirstName.Length <= 0)
+            {
+
+                user.FirstName = _context.User.AsNoTracking().SingleOrDefault(m => m.UserId == id).FirstName;
+            }
+            if (user.LastName == null || user.LastName.Length <= 0)
+            {
+
+                user.LastName = _context.User.AsNoTracking().SingleOrDefault(m => m.UserId == id).LastName;
+            }
+            if (user.Username == null || user.Username.Length <= 0)
+            {
+
+                user.Username = _context.User.AsNoTracking().SingleOrDefault(m => m.UserId == id).Username;
+            }
             if (user.Password == null || user.Password.Length <= 0)
             {
-                user.Password = _context.User.SingleOrDefault(m => m.UserId == id).Password;
+
+                user.Password = _context.User.AsNoTracking().SingleOrDefault(m => m.UserId == id).Password;
             }
+
 
             _context.Entry(user).State = EntityState.Modified;
 
