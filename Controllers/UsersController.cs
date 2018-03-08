@@ -5,10 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 using Mixtape.Models;
-using Swashbuckle.AspNetCore.SwaggerGen;
-using Microsoft.Azure.KeyVault.Models;
-using Microsoft.AspNetCore.Authorization;
-using System.Collections.ObjectModel;
 
 namespace Mixtape.Controllers
 {
@@ -98,6 +94,16 @@ namespace Mixtape.Controllers
             if (id != user.UserId)
             {
                 return BadRequest();
+            }
+
+            //Get the old user data
+            var oldUserData = await _context.User.SingleOrDefaultAsync(m => m.UserId == id);
+
+            //If the user's password was not actually changed, then we need to set it to their current
+            //password, otherwise, it will be set as null (THERE MAY BE A BETTER WAY!)
+            if (user.Password == null || user.Password.Length <= 0)
+            {
+                user.Password = oldUserData.Password;
             }
 
             _context.Entry(user).State = EntityState.Modified;
