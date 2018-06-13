@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Mixtape.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Microsoft.Azure.KeyVault.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Mixtape.Controllers
 {
@@ -46,6 +47,7 @@ namespace Mixtape.Controllers
         /// <returns>A given playlistsong entity</returns>
         /// <response code="200">Playlistsong entity</response>
         /// <response code="400">Error model</response>
+        [Authorize]
         [HttpGet("{search}")]
         //[ProducesResponseType(typeof(PlaylistSong), 200)]
         //[ProducesResponseType(typeof(Error), 400)]
@@ -95,7 +97,6 @@ namespace Mixtape.Controllers
 
         private class SearchResults
         {
-
             public ICollection<Artist> Artists { get; set; }
             public ICollection<Album> Albums { get; set; }
             public ICollection<Song> Songs { get; set; }

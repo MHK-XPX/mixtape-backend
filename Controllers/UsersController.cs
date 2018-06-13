@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -48,6 +49,7 @@ namespace Mixtape.Controllers
         /// <returns>A given user entity</returns>
         /// <response code="200">User entity</response>
         /// <response code="400">Error model</response>
+        [Authorize]
         [HttpGet("{id}")]
         //[ProducesResponseType(typeof(User), 200)]
         //[ProducesResponseType(typeof(Error), 400)]
@@ -79,6 +81,7 @@ namespace Mixtape.Controllers
         /// <returns>An empty object</returns>
         /// <response code="200">User sucessfully updated</response>
         /// <response code="400">Error model</response>
+        [Authorize]
         [HttpPut("{id}")]
         //[ProducesResponseType(typeof(User), 200)]
         //[ProducesResponseType(typeof(Error), 400)]
@@ -186,6 +189,7 @@ namespace Mixtape.Controllers
         /// <returns>An empty object</returns>
         /// <response code="200">User sucessfully deleted</response>
         /// <response code="400">Error model</response>
+        [Authorize]
         [HttpDelete("{id}")]
         //[ProducesResponseType(typeof(User), 200)]
         //[ProducesResponseType(typeof(Error), 400)]
