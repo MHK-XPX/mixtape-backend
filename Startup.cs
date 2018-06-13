@@ -12,6 +12,7 @@ using System.IO;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Mixtape.Hubs;
 
 namespace Mixtape
 {
@@ -27,7 +28,7 @@ namespace Mixtape
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //tring connection = Configuration.GetConnectionString("DATABASE"); //DEV
+            //string connection = Configuration.GetConnectionString("DATABASE"); //DEV
             string connection = Environment.GetEnvironmentVariable("DATABASE"); //PROD
             services.AddDbContext<DataContext>(options => options.UseMySql(connection));
 
@@ -70,6 +71,8 @@ namespace Mixtape
                     });
             });
 
+            services.AddSignalR();
+
             services.AddMvc()
                 .AddJsonOptions(
                     options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
@@ -97,6 +100,11 @@ namespace Mixtape
             app.UseCors("AllowAll");
 
             app.UseAuthentication();
+
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<MessageHub>("/messagehub");
+            });
 
             app.UseMvc();
 
