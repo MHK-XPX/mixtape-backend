@@ -47,7 +47,6 @@ namespace Mixtape.Controllers
         /// <returns>A given playlistsong entity</returns>
         /// <response code="200">Playlistsong entity</response>
         /// <response code="400">Error model</response>
-        [Authorize]
         [HttpGet("{search}")]
         //[ProducesResponseType(typeof(PlaylistSong), 200)]
         //[ProducesResponseType(typeof(Error), 400)]
