@@ -30,8 +30,8 @@ namespace mixtape.Controllers
 
         private string CreateToken(User user)
         {
-            //string secret = _authSettings.SECRET; //DEV
-            string secret = Environment.GetEnvironmentVariable("SECRET"); //PROD
+            //string secret = _authSettings.SECRET; //change later to below
+            string secret = Environment.GetEnvironmentVariable("SECRET");
             var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
             var signingCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
             var claims = new Claim[] { new Claim(JwtRegisteredClaimNames.Sub, user.UserId.ToString()) };

@@ -6,10 +6,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 using Mixtape.Models;
+using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.Extensions.PlatformAbstractions;
+using System.IO;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using mixtape.Hubs;
 
 namespace Mixtape
 {
@@ -25,15 +27,15 @@ namespace Mixtape
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //string connection = Configuration.GetConnectionString("DATABASE"); //DEV
-            string connection = Environment.GetEnvironmentVariable("DATABASE"); //PROD
+            //string connection = Configuration.GetConnectionString("DATABASE");
+            string connection = Environment.GetEnvironmentVariable("DATABASE");
             services.AddDbContext<DataContext>(options => options.UseMySql(connection));
 
             var authSettings = Configuration.GetSection("AuthSettings");
             services.Configure<AuthSetting>(authSettings);
 
-            //string secret = authSettings.Get<AuthSetting>().SECRET; //DEV
-            string secret = Environment.GetEnvironmentVariable("SECRET"); //PROD
+            //string secret = authSettings.Get<AuthSetting>().SECRET; //change to below later
+            string secret = Environment.GetEnvironmentVariable("SECRET");
             var key = Encoding.UTF8.GetBytes(secret);
 
             services.AddAuthentication(options =>
@@ -55,12 +57,9 @@ namespace Mixtape
                 };
             });
 
-
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowAll",
-
-
                     builder =>
                     {
                         builder
@@ -70,8 +69,6 @@ namespace Mixtape
                         .AllowCredentials();
                     });
             });
-
-            services.AddSignalR();
 
             services.AddMvc()
                 .AddJsonOptions(
@@ -100,11 +97,6 @@ namespace Mixtape
             app.UseCors("AllowAll");
 
             app.UseAuthentication();
-
-            app.UseSignalR(routes =>
-            {
-                routes.MapHub<MessageHub>("/messagehub");
-            });
 
             app.UseMvc();
 

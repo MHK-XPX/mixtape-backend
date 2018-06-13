@@ -7,7 +7,6 @@ namespace Mixtape.Models
         public virtual DbSet<Album> Album { get; set; }
         public virtual DbSet<AlbumRating> AlbumRating { get; set; }
         public virtual DbSet<Artist> Artist { get; set; }
-        public virtual DbSet<GlobalPlaylistSong> GlobalPlaylistSong { get; set; }
         public virtual DbSet<Playlist> Playlist { get; set; }
         public virtual DbSet<PlaylistSong> PlaylistSong { get; set; }
         public virtual DbSet<Song> Song { get; set; }
@@ -145,40 +144,6 @@ namespace Mixtape.Models
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("PLAYLIST_ibfk_1");
-            });
-
-            modelBuilder.Entity<GlobalPlaylistSong>(entity =>
-            {
-                entity.ToTable("global_playlist_song");
-
-                entity.HasIndex(e => e.GlobalPlaylistSongId)
-                    .HasName("GLOBAL_PLAYLIST_SONG_ID");
-
-                entity.HasIndex(e => e.SongId)
-                    .HasName("SONG_ID");
-
-                entity.Property(e => e.GlobalPlaylistSongId)
-                    .HasColumnName("GLOBAL_PLAYLIST_SONG_ID")
-                    .HasColumnType("int(11)");
-
-                entity.Property(e => e.SongId)
-                    .HasColumnName("SONG_ID")
-                    .HasColumnType("int(11)");
-
-                entity.Property(e => e.UserId)
-                    .HasColumnName("USER_ID")
-                    .HasColumnType("int(11)");
-
-                entity.Property(e => e.Votes)
-                    .HasColumnName("VOTES")
-                    .HasColumnType("int(11)");
-
-                entity.Property(e => e.IsStatic)
-                    .HasColumnName("IS_STATIC")
-                    .HasColumnType("bit(1)")
-                    .HasDefaultValueSql("b'0'");
-
-                entity.HasOne(d => d.Song);
             });
 
             modelBuilder.Entity<PlaylistSong>(entity =>
