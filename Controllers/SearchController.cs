@@ -83,6 +83,13 @@ namespace Mixtape.Controllers
                     sr.Albums = await _context.Album.Where(alb => alb.ArtistId == artId).AsNoTracking().ToListAsync();
                     sr.Songs = await _context.Song.Where(s => s.ArtistId == artId).AsNoTracking().ToListAsync();
                 }
+            }else if(sr.Albums.Count > 0)
+            {
+                foreach(Album alb in sr.Albums)
+                {
+                    sr.Artists = await _context.Artist.Where(art => art.ArtistId == alb.ArtistId).AsNoTracking().ToListAsync();
+                    sr.Songs = await _context.Song.Where(s => s.AlbumId == alb.AlbumId).AsNoTracking().ToListAsync();
+                }
             }
 
             if (sr == null)
