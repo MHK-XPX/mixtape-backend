@@ -70,8 +70,8 @@ namespace Mixtape.Controllers
             var sr = new SearchResults();
 
             sr.Artists = await _context.Artist.Where(art => art.Name.Contains(search)).AsNoTracking().ToListAsync();
-            sr.Albums = await _context.Album.Where(alb => alb.Name.Contains(search)).AsNoTracking().ToListAsync();
-            sr.Songs = await _context.Song.Where(s => s.Name.Contains(search)).AsNoTracking().ToListAsync();
+            sr.Albums = await _context.Album.Where(alb => alb.Name.Contains(search)).Include(a => a.Artist).AsNoTracking().ToListAsync();
+            sr.Songs = await _context.Song.Where(s => s.Name.Contains(search)).Include(a => a.Artist).AsNoTracking().ToListAsync();
 
             //sr.Artists = await _context.Artist.ToListAsync(art => art.Name.Contains(search));
 
