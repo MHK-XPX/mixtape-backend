@@ -23,7 +23,11 @@ namespace Mixtape.Controllers
         }
 
         // GET: api/GlobalPlaylistSongs
-        //[Authorize]
+        /// <summary>
+        /// Gets all global playlist songs
+        /// </summary>
+        /// <returns></returns>
+        /// <response code="200">A list of global playlist songs</response>
         [HttpGet]
         public IEnumerable<GlobalPlaylistSong> GetPlaylistSong()
         {
@@ -32,7 +36,12 @@ namespace Mixtape.Controllers
 
 
         // POST: api/GlobalPlaylistSongs
-        //[Authorize]
+        /// <summary>
+        /// Adds a global playlist song to the database
+        /// </summary>
+        /// <param name="globalPlaylistSong">The global playlist song to add</param>
+        /// <returns></returns>
+        /// <response code="200">The added global playlist song object</response>
         [HttpPost]
         public async Task<IActionResult> PostPlaylistSong([FromBody] GlobalPlaylistSong globalPlaylistSong)
         {

@@ -14,10 +14,6 @@ namespace Mixtape.Controllers
     {
         private readonly DataContext _context;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="context"></param>
         public UsersController(DataContext context)
         {
             _context = context;
@@ -31,10 +27,6 @@ namespace Mixtape.Controllers
         /// <response code="200">User entities</response>
         /// <response code="400">Error model</response>
         [HttpGet]
-        //[ProducesResponseType(typeof(ICollection<User>), 200)]
-        //[ProducesResponseType(typeof(Error), 400)]
-        //[SwaggerResponse(200, Type = typeof(User), Description = "User objects returned successfully")]
-        //[SwaggerResponse(400, Type = typeof(Error), Description = "Bad Request")]
         public IEnumerable<User> GetUser()
         {
             return _context.User;
@@ -49,10 +41,7 @@ namespace Mixtape.Controllers
         /// <response code="200">User entity</response>
         /// <response code="400">Error model</response>
         [HttpGet("{id}")]
-        //[ProducesResponseType(typeof(User), 200)]
-        //[ProducesResponseType(typeof(Error), 400)]
-        //[SwaggerResponse(200, Type = typeof(User), Description = "User object returned successfully")]
-        //[SwaggerResponse(400, Type = typeof(Error), Description = "Bad Request")]
+
         public async Task<IActionResult> GetUser([FromRoute] int id)
         {
             if (!ModelState.IsValid)
@@ -80,10 +69,6 @@ namespace Mixtape.Controllers
         /// <response code="200">User sucessfully updated</response>
         /// <response code="400">Error model</response>
         [HttpPut("{id}")]
-        //[ProducesResponseType(typeof(User), 200)]
-        //[ProducesResponseType(typeof(Error), 400)]
-        //[SwaggerResponse(200, Type = typeof(User), Description = "User updated successfully")]
-        //[SwaggerResponse(400, Type = typeof(Error), Description = "Bad Request")]
         public async Task<IActionResult> PutUser([FromRoute] int id, [FromBody] User user)
         {
             if (!ModelState.IsValid)
@@ -152,10 +137,6 @@ namespace Mixtape.Controllers
         /// <response code="201">User sucessfully created</response>
         /// <response code="400">Error model</response>
         [HttpPost]
-        //[ProducesResponseType(typeof(User), 201)]
-        //[ProducesResponseType(typeof(Error), 400)]
-        //[SwaggerResponse(201, Type = typeof(User), Description = "User successfully created")]
-        //[SwaggerResponse(400, Type = typeof(Error), Description = "Bad Request")]
         public async Task<IActionResult> PostUser([FromBody] User user)
         {
             if (!ModelState.IsValid)
@@ -166,7 +147,7 @@ namespace Mixtape.Controllers
             User _user = _context.User.SingleOrDefault(x => x.Username == user.Username);
 
             //If the username is already taken we return a 400 error
-            if(_user != null)
+            if (_user != null)
             {
                 ModelState.AddModelError("Error", "Username already taken");
                 return BadRequest(ModelState);
@@ -187,10 +168,6 @@ namespace Mixtape.Controllers
         /// <response code="200">User sucessfully deleted</response>
         /// <response code="400">Error model</response>
         [HttpDelete("{id}")]
-        //[ProducesResponseType(typeof(User), 200)]
-        //[ProducesResponseType(typeof(Error), 400)]
-        //[SwaggerResponse(200, Type = typeof(User), Description = "User deleted successfully")]
-        //[SwaggerResponse(400, Type = typeof(Error), Description = "Bad Request")]
         public async Task<IActionResult> DeleteUser([FromRoute] int id)
         {
             if (!ModelState.IsValid)
@@ -211,20 +188,27 @@ namespace Mixtape.Controllers
         }
 
         // api/Users/Check/<username>
-         [HttpGet("Check/{username}")]
-         public async Task<IActionResult> CheckForUsername([FromRoute] string username)
-         {
-             User _user = _context.User.SingleOrDefault(x => x.Username == username);
- 
-             //If the username is already taken we return a 400 error
-             if (_user != null)
-             {
-                 ModelState.AddModelError("Error", "Username already taken");
-                 return BadRequest(ModelState);
-             }
- 
-             return Ok();
-         }
+        /// <summary>
+        /// Checks if a given username is taken or not
+        /// </summary>
+        /// <param name="username">The username to check</param>
+        /// <returns></returns>
+        /// <response code="200">Username is not taken</response>
+        /// <response code="400">Username is taken</response>
+        [HttpGet("Check/{username}")]
+        public async Task<IActionResult> CheckForUsername([FromRoute] string username)
+        {
+            User _user = _context.User.SingleOrDefault(x => x.Username == username);
+
+            //If the username is already taken we return a 400 error
+            if (_user != null)
+            {
+                ModelState.AddModelError("Error", "Username already taken");
+                return BadRequest(ModelState);
+            }
+
+            return Ok();
+        }
 
         private bool UserExists(int id)
         {

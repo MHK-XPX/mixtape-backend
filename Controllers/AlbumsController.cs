@@ -20,6 +20,11 @@ namespace Mixtape.Controllers
         }
 
         // GET: api/Albums
+        /// <summary>
+        /// Gets all albums
+        /// </summary>
+        /// <returns></returns>
+        /// <response code="200">A list of all albums</response>
         [HttpGet]
         public IEnumerable<Album> GetAlbum()
         {
@@ -27,6 +32,12 @@ namespace Mixtape.Controllers
         }
 
         // GET: api/Albums/5
+        /// <summary>
+        /// Gets a specific album
+        /// </summary>
+        /// <param name="id">The id of the specific album</param>
+        /// <returns></returns>
+        /// <response code="200">An album object</response>
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAlbum([FromRoute] int id)
         {
@@ -48,6 +59,13 @@ namespace Mixtape.Controllers
         }
 
         // PUT: api/Albums/5
+        /// <summary>
+        /// Updates a specific album object
+        /// </summary>
+        /// <param name="id">The id of the album to update</param>
+        /// <param name="album">The updated album object</param>
+        /// <returns></returns>
+        /// <response code="200">No content</response>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAlbum([FromRoute] int id, [FromBody] Album album)
         {
@@ -83,6 +101,12 @@ namespace Mixtape.Controllers
         }
 
         // POST: api/Albums
+        /// <summary>
+        /// Adds an album object to the database
+        /// </summary>
+        /// <param name="album">An album object</param>
+        /// <returns></returns>
+        /// <response code="200">The added album object</response>
         [HttpPost]
         public async Task<IActionResult> PostAlbum([FromBody] Album album)
         {
@@ -98,6 +122,12 @@ namespace Mixtape.Controllers
         }
 
         // DELETE: api/Albums/5
+        /// <summary>
+        /// Removes a specific album object from the database
+        /// </summary>
+        /// <param name="id">The id of the album object to remove</param>
+        /// <returns></returns>
+        /// <response code="200">The removed album object</response>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAlbum([FromRoute] int id)
         {

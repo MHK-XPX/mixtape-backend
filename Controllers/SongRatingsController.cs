@@ -8,6 +8,9 @@ using Mixtape.Models;
 
 namespace Mixtape.Controllers
 {
+    /// <summary>
+    /// Not implemented yet
+    /// </summary>
     [Produces("application/json")]
     [Route("api/SongRatings")]
     public class SongRatingsController : Controller
@@ -20,6 +23,11 @@ namespace Mixtape.Controllers
         }
 
         // GET: api/SongRatings
+        /// <summary>
+        /// A list of all song ratings 
+        /// </summary>
+        /// <returns></returns>
+        /// <response code="200">A list of song rating</response>
         [HttpGet]
         public IEnumerable<SongRating> GetSongRating()
         {
@@ -27,6 +35,12 @@ namespace Mixtape.Controllers
         }
 
         // GET: api/SongRatings/5
+        /// <summary>
+        /// Gets a specific song rating
+        /// </summary>
+        /// <param name="id">The id of the song rating to get</param>
+        /// <returns></returns>
+        /// <response code="200">A song rating object</response>
         [HttpGet("{id}")]
         public async Task<IActionResult> GetSongRating([FromRoute] int id)
         {
@@ -46,6 +60,13 @@ namespace Mixtape.Controllers
         }
 
         // PUT: api/SongRatings/5
+        /// <summary>
+        /// Updates a given song rating
+        /// </summary>
+        /// <param name="id">The id of the song rating to update</param>
+        /// <param name="songRating">The updated song rating object</param>
+        /// <returns></returns>
+        /// <response code="200">No content</response>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutSongRating([FromRoute] int id, [FromBody] SongRating songRating)
         {
@@ -81,6 +102,12 @@ namespace Mixtape.Controllers
         }
 
         // POST: api/SongRatings
+        /// <summary>
+        /// Adds a song rating object to the database
+        /// </summary>
+        /// <param name="songRating">The song rating object to add</param>
+        /// <returns></returns>
+        /// <response code="200">The added song rating object</response>
         [HttpPost]
         public async Task<IActionResult> PostSongRating([FromBody] SongRating songRating)
         {
@@ -96,6 +123,12 @@ namespace Mixtape.Controllers
         }
 
         // DELETE: api/SongRatings/5
+        /// <summary>
+        /// Removes a song rating object from the database
+        /// </summary>
+        /// <param name="id">The id of the song rating object to remove from the database</param>
+        /// <returns></returns>
+        /// <response code="200">The removed song rating object</response>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteSongRating([FromRoute] int id)
         {

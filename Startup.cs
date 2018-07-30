@@ -13,6 +13,9 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Mixtape.Hubs;
+using System.Reflection;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Mixtape
 {
@@ -28,6 +31,7 @@ namespace Mixtape
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             //string connection = Configuration.GetConnectionString("DATABASE"); //DEV
             string connection = Environment.GetEnvironmentVariable("DATABASE"); //PROD
             services.AddDbContext<DataContext>(options => options.UseMySql(connection));
@@ -78,13 +82,25 @@ namespace Mixtape
                     options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
                 );
 
-            /*services.AddSwaggerGen(options =>
+            services.AddSwaggerGen(c =>
             {
-                options.SwaggerDoc("v1", new Info { Title = "MY API", Version = "v1" });
-                var basePath = PlatformServices.Default.Application.ApplicationBasePath;
-                var xmlPath = Path.Combine(basePath, "mixtape.xml");
-                options.IncludeXmlComments(xmlPath);
-            });*/
+                c.SwaggerDoc("v1", new Info { Title = "Mixtape API", Version = "v1" });
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
+
+                c.AddSecurityDefinition("Bearer", new ApiKeyScheme
+                {
+                    In = "header",
+                    Description = "Please enter JWT with Bearer into field (IE: Bearer <Auth Token here>)",
+                    Name = "Authorization",
+                    Type = "apiKey",
+                });
+
+                c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>> {
+                    { "Bearer", Enumerable.Empty<string>() },
+                });
+            });
 
 
         }
@@ -108,12 +124,13 @@ namespace Mixtape
 
             app.UseMvc();
 
-            /*app.UseSwagger();
+            app.UseSwagger();
 
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Mixtape API");
-            });*/
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.RoutePrefix = string.Empty;
+            });
         }
     }
 }

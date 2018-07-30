@@ -21,6 +21,11 @@ namespace Mixtape.Controllers
             _context = context;
         }
 
+        /// <summary>
+        /// Gets all message data objects
+        /// </summary>
+        /// <returns></returns>
+        /// <response code="200">A list of all message data objects</response>
         [HttpGet]
         public IActionResult Get()
         {
@@ -47,6 +52,12 @@ namespace Mixtape.Controllers
             return Ok(list);
         }
 
+        /// <summary>
+        /// Updates a given message data object
+        /// </summary>
+        /// <param name="messageData">The updated message data object</param>
+        /// <returns></returns>
+        /// <response code="200">No content</response>
         [HttpPatch]
         public IActionResult Patch([FromBody] MessageData messageData)
         {
@@ -66,6 +77,12 @@ namespace Mixtape.Controllers
             return Ok(messageData);
         }
 
+        /// <summary>
+        /// Removes a specific message data object from the database
+        /// </summary>
+        /// <param name="id">The id of the message data object to remove</param>
+        /// <returns></returns>
+        /// <response code="200">The removed message data object</response>
         [HttpDelete("{id}")]
         public IActionResult Delete([FromRoute] int id)
         {

@@ -20,6 +20,11 @@ namespace Mixtape.Controllers
         }
 
         // GET: api/AlbumRatings
+        /// <summary>
+        /// Gets all of the album ratings
+        /// </summary>
+        /// <returns></returns>
+        /// <response code="200">A list of all album ratings</response>
         [HttpGet]
         public IEnumerable<AlbumRating> GetAlbumRating()
         {
@@ -27,6 +32,12 @@ namespace Mixtape.Controllers
         }
 
         // GET: api/AlbumRatings/5
+        /// <summary>
+        /// Gets a specific album rating
+        /// </summary>
+        /// <param name="id">The id of the album rating object to get</param>
+        /// <returns></returns>
+        /// <response code="200">The specific album rating object</response>
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAlbumRating([FromRoute] int id)
         {
@@ -46,6 +57,13 @@ namespace Mixtape.Controllers
         }
 
         // PUT: api/AlbumRatings/5
+        /// <summary>
+        /// Updates a given album rating object
+        /// </summary>
+        /// <param name="id">The id of the album rating object to update</param>
+        /// <param name="albumRating">The updated album rating object</param>
+        /// <returns></returns>
+        /// <response code="200">No content</response>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAlbumRating([FromRoute] int id, [FromBody] AlbumRating albumRating)
         {
@@ -81,6 +99,12 @@ namespace Mixtape.Controllers
         }
 
         // POST: api/AlbumRatings
+        /// <summary>
+        /// Adds a new album rating object to the database
+        /// </summary>
+        /// <param name="albumRating">A album rating object</param>
+        /// <returns></returns>
+        /// <response code="200">The added album rating object</response>
         [HttpPost]
         public async Task<IActionResult> PostAlbumRating([FromBody] AlbumRating albumRating)
         {
@@ -96,6 +120,12 @@ namespace Mixtape.Controllers
         }
 
         // DELETE: api/AlbumRatings/5
+        /// <summary>
+        /// Removes a specific album rating object from the database
+        /// </summary>
+        /// <param name="id">The id of the album rating object to remove</param>
+        /// <returns></returns>
+        /// <response code="200">The removed album rating object</response>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAlbumRating([FromRoute] int id)
         {

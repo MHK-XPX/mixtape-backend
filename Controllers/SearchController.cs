@@ -21,36 +21,26 @@ namespace Mixtape.Controllers
             _context = context;
         }
 
-        // GET: api/PlaylistSongs
+        // GET: api/Search
         /// <summary>
-        /// Get all playlistsongs
+        /// 
         /// </summary>
-        /// <returns>All playlistsong entities</returns>
-        /// <response code="200">Playlistsong entities</response>
-        /// <response code="400">Error model</response>
+        /// <response code="200">No Content</response>
         [HttpGet]
-        //[ProducesResponseType(typeof(ICollection<PlaylistSong>), 200)]
-        //[ProducesResponseType(typeof(Error), 400)]
-        //[SwaggerResponse(200, Type = typeof(PlaylistSong), Description = "Playlistsong objects returned successfully")]
-        //[SwaggerResponse(400, Type = typeof(Error), Description = "Bad Request")]
-        public IEnumerable<PlaylistSong> GetPlaylistSong()
+        public IActionResult GetPlaylistSong()
         {
-            return _context.PlaylistSong;
+            return NoContent();
         }
 
-        // GET: api/PlaylistSongs/5
+        // GET: api/Search/Garth Brooks
         /// <summary>
-        /// Get a given playlistsong
+        /// Get any artist, albums, or songs that match a given search string
         /// </summary>
-        /// <param name="id">ID of the playlistsong</param>
-        /// <returns>A given playlistsong entity</returns>
-        /// <response code="200">Playlistsong entity</response>
+        /// <param name="search">The string to search for</param>
+        /// <returns></returns>
+        /// <response code="200">Artist, Album, and/or songs matching the search string</response>
         /// <response code="400">Error model</response>
         [HttpGet("{search}")]
-        //[ProducesResponseType(typeof(PlaylistSong), 200)]
-        //[ProducesResponseType(typeof(Error), 400)]
-        //[SwaggerResponse(200, Type = typeof(PlaylistSong), Description = "Playlistsong object returned successfully")]
-        //[SwaggerResponse(400, Type = typeof(Error), Description = "Bad Request")]
         public async Task<IActionResult> GetPlaylistSong([FromRoute] string search)
         {
             if (!ModelState.IsValid)

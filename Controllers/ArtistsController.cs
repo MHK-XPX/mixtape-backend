@@ -20,6 +20,11 @@ namespace Mixtape.Controllers
         }
 
         // GET: api/Artists
+        /// <summary>
+        /// Gets all artists
+        /// </summary>
+        /// <returns></returns>
+        /// <response code="200">A list of artists</response>
         [HttpGet]
         public IEnumerable<Artist> GetArtist()
         {
@@ -27,6 +32,12 @@ namespace Mixtape.Controllers
         }
 
         // GET: api/Artists/5
+        /// <summary>
+        /// Gets a specific artist
+        /// </summary>
+        /// <param name="id">The id of the artist to get</param>
+        /// <returns></returns>
+        /// <response code="200">A specific artist object</response>
         [HttpGet("{id}")]
         public async Task<IActionResult> GetArtist([FromRoute] int id)
         {
@@ -73,6 +84,13 @@ namespace Mixtape.Controllers
         }
 
         // PUT: api/Artists/5
+        /// <summary>
+        /// Updates a specific artist
+        /// </summary>
+        /// <param name="id">The id of the artist to update</param>
+        /// <param name="artist">The updated artist object</param>
+        /// <returns></returns>
+        /// <response code="200">No content</response>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutArtist([FromRoute] int id, [FromBody] Artist artist)
         {
@@ -108,6 +126,12 @@ namespace Mixtape.Controllers
         }
 
         // POST: api/Artists
+        /// <summary>
+        /// Adds an artist to the database
+        /// </summary>
+        /// <param name="artist">The artist object to add to the database</param>
+        /// <returns></returns>
+        /// <response code="200">The added artist object</response>
         [HttpPost]
         public async Task<IActionResult> PostArtist([FromBody] Artist artist)
         {
@@ -123,6 +147,12 @@ namespace Mixtape.Controllers
         }
 
         // DELETE: api/Artists/5
+        /// <summary>
+        /// Removes a specific artist from the database
+        /// </summary>
+        /// <param name="id">The id of the artist to remove</param>
+        /// <returns></returns>
+        /// <response code="200">The removed artist object</response>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteArtist([FromRoute] int id)
         {

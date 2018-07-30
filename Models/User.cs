@@ -9,6 +9,7 @@ namespace Mixtape.Models
             AlbumRating = new HashSet<AlbumRating>();
             Playlist = new HashSet<Playlist>();
             SongRating = new HashSet<SongRating>();
+            SharedPlaylist = new HashSet<SharedPlaylist>();
         }
 
         public int UserId { get; set; }
@@ -20,5 +21,6 @@ namespace Mixtape.Models
         public virtual ICollection<AlbumRating> AlbumRating { get; set; }
         public virtual ICollection<Playlist> Playlist { get; set; }
         public virtual ICollection<SongRating> SongRating { get; set; }
+        public virtual ICollection<SharedPlaylist> SharedPlaylist { get; set; }
     }
 }

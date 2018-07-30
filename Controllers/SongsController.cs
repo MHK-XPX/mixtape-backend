@@ -20,6 +20,11 @@ namespace Mixtape.Controllers
         }
 
         // GET: api/Songs
+        /// <summary>
+        /// A list of all songs
+        /// </summary>
+        /// <returns></returns>
+        /// <response code="200">A list of all songs</response>
         [HttpGet]
         public IEnumerable<Song> GetSong()
         {
@@ -27,6 +32,12 @@ namespace Mixtape.Controllers
         }
 
         // GET: api/Songs/5
+        /// <summary>
+        /// Gets a specific song
+        /// </summary>
+        /// <param name="id">The id of the song to get</param>
+        /// <returns></returns>
+        /// <response code="200">A given song object</response>
         [HttpGet("{id}")]
         public async Task<IActionResult> GetSong([FromRoute] int id)
         {
@@ -46,6 +57,13 @@ namespace Mixtape.Controllers
         }
 
         // PUT: api/Songs/5
+        /// <summary>
+        /// Updates a given song
+        /// </summary>
+        /// <param name="id">The id of the song to update</param>
+        /// <param name="song">The updated song object</param>
+        /// <returns></returns>
+        /// <response code="200">No content</response>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutSong([FromRoute] int id, [FromBody] Song song)
         {
@@ -81,6 +99,12 @@ namespace Mixtape.Controllers
         }
 
         // POST: api/Songs
+        /// <summary>
+        /// Adds a song to the database
+        /// </summary>
+        /// <param name="song">The song object to add</param>
+        /// <returns></returns>
+        /// <response code="200">The added song object</response>
         [HttpPost]
         public async Task<IActionResult> PostSong([FromBody] Song song)
         {
@@ -96,6 +120,12 @@ namespace Mixtape.Controllers
         }
 
         // DELETE: api/Songs/5
+        /// <summary>
+        /// Removes a song from the database
+        /// </summary>
+        /// <param name="id">The id of the song to remove</param>
+        /// <returns></returns>
+        /// <response code="200">The removed song object</response>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteSong([FromRoute] int id)
         {
