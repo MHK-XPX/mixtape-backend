@@ -29,10 +29,16 @@ namespace Mixtape
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var connectionString = Configuration["ConnectionStrings:DATABASE"];
+            var connectionString = string.IsNullOrEmpty(Configuration["ConnectionStrings:DATABASE"])
+                ? Environment.GetEnvironmentVariable("DATABASE")
+                : Configuration["ConnectionStrings:DATABASE"];
+
             services.AddDbContext<DataContext>(options => options.UseMySql(connectionString));
 
-            var secret = Configuration["AuthSettings:SECRET"];
+            var secret = string.IsNullOrWhiteSpace(Configuration["AuthSettings:SECRET"])
+                ? Environment.GetEnvironmentVariable("SECRET")
+                : Configuration["AuthSettings:SECRET"];
+
             services.Configure<AuthSetting>(authSetting => authSetting.SECRET = secret);
 
             var key = Encoding.UTF8.GetBytes(secret);
