@@ -1,18 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
 using Mixtape.Models;
-using Swashbuckle.AspNetCore.SwaggerGen;
-using Microsoft.Azure.KeyVault.Models;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Mixtape.Controllers
 {
     [Produces("application/json")]
     [Route("api/GlobalPlaylistSongs")]
+    [Authorize]
     public class GlobalPlaylistSongsController : Controller
     {
         private readonly DataContext _context;

@@ -1,21 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-
-using Mixtape.Models;
-using Swashbuckle.AspNetCore.Swagger;
-using Microsoft.Extensions.PlatformAbstractions;
-using System.IO;
-using System.Text;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Mixtape.Hubs;
-using System.Reflection;
-using System.Collections.Generic;
-using System.Linq;
+using Mixtape.Models;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace Mixtape
 {
@@ -31,18 +29,13 @@ namespace Mixtape
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var connectionString = Configuration["ConnectionStrings:DATABASE"];
+            services.AddDbContext<DataContext>(options => options.UseMySql(connectionString));
 
-            //string connection = Configuration.GetConnectionString("DATABASE"); //DEV
-            string connection = Environment.GetEnvironmentVariable("DATABASE"); //PROD
-            services.AddDbContext<DataContext>(options => options.UseMySql(connection));
+            var secret = Configuration["AuthSettings:SECRET"];
+            services.Configure<AuthSetting>(authSetting => authSetting.SECRET = secret);
 
-            var authSettings = Configuration.GetSection("AuthSettings");
-            services.Configure<AuthSetting>(authSettings);
-
-            //string secret = authSettings.Get<AuthSetting>().SECRET; //DEV
-            string secret = Environment.GetEnvironmentVariable("SECRET"); //PROD
             var key = Encoding.UTF8.GetBytes(secret);
-
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

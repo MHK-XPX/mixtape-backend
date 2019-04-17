@@ -1,15 +1,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
 using Mixtape.Models;
 
 namespace Mixtape.Controllers
 {
     [Produces("application/json")]
     [Route("api/Users")]
+    [Authorize]
     public class UsersController : Controller
     {
         private readonly DataContext _context;
@@ -137,6 +138,7 @@ namespace Mixtape.Controllers
         /// <response code="201">User sucessfully created</response>
         /// <response code="400">Error model</response>
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> PostUser([FromBody] User user)
         {
             if (!ModelState.IsValid)
@@ -196,6 +198,7 @@ namespace Mixtape.Controllers
         /// <response code="200">Username is not taken</response>
         /// <response code="400">Username is taken</response>
         [HttpGet("Check/{username}")]
+        [AllowAnonymous]
         public async Task<IActionResult> CheckForUsername([FromRoute] string username)
         {
             User _user = _context.User.SingleOrDefault(x => x.Username == username);

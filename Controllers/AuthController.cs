@@ -8,15 +8,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-
 using Mixtape.Models;
-using Swashbuckle.AspNetCore.SwaggerGen;
-using Microsoft.Azure.KeyVault.Models;
 
 namespace mixtape.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]
+    [Authorize]
     public class AuthController : Controller
     {
         private readonly DataContext _context;
@@ -30,12 +28,12 @@ namespace mixtape.Controllers
 
         private string CreateToken(User user)
         {
-            //string secret = _authSettings.SECRET; //DEV
-            string secret = Environment.GetEnvironmentVariable("SECRET"); //PROD
+            string secret = _authSettings.SECRET;
             var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
             var signingCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
             var claims = new Claim[] { new Claim(JwtRegisteredClaimNames.Sub, user.UserId.ToString()) };
             var jwt = new JwtSecurityToken(claims: claims, signingCredentials: signingCredentials);
+
             return new JwtSecurityTokenHandler().WriteToken(jwt);
         }
 
@@ -79,6 +77,7 @@ namespace mixtape.Controllers
         /// <response code="200">Authenticated User</response>
         /// <response code="400">Error model</response>
         [HttpPost("login")]
+        [AllowAnonymous]
         public IActionResult Login([FromBody]LoginUser user)
         {
             string username = user.Username;

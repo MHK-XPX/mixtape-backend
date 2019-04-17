@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
 using Mixtape.Models;
 
 namespace Mixtape.Controllers
@@ -13,6 +13,7 @@ namespace Mixtape.Controllers
     /// </summary>
     [Produces("application/json")]
     [Route("api/SongRatings")]
+    [Authorize]
     public class SongRatingsController : Controller
     {
         private readonly DataContext _context;
