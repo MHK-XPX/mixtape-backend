@@ -11,7 +11,8 @@ namespace Mixtape.Controllers
     [Produces("application/json")]
     [Route("api/PlaylistSongs")]
     [Authorize]
-    public class PlaylistSongsController : Controller
+    [ApiController]
+    public class PlaylistSongsController : ControllerBase
     {
         private readonly DataContext _context;
 

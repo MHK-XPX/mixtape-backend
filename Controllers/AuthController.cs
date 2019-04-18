@@ -15,7 +15,8 @@ namespace mixtape.Controllers
     [Produces("application/json")]
     [Route("api/[controller]")]
     [Authorize]
-    public class AuthController : Controller
+    [ApiController]
+    public class AuthController : ControllerBase
     {
         private readonly DataContext _context;
         private AuthSetting _authSettings;

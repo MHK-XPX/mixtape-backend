@@ -11,7 +11,8 @@ namespace Mixtape.Controllers
     [Produces("application/json")]
     [Route("api/Playlists")]
     [Authorize]
-    public class PlaylistsController : Controller
+    [ApiController]
+    public class PlaylistsController : ControllerBase
     {
         private readonly DataContext _context;
 
@@ -156,9 +157,9 @@ namespace Mixtape.Controllers
                             .Where(m => m.PlaylistId == playlist.PlaylistId)
                             .AsNoTracking().ToListAsync();
 
-            if(plsList != null || plsList.Count > 0)
+            if (plsList != null || plsList.Count > 0)
             {
-                foreach(PlaylistSong pls in plsList)
+                foreach (PlaylistSong pls in plsList)
                 {
                     _context.PlaylistSong.Remove(pls);
                 }

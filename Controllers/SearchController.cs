@@ -11,7 +11,8 @@ namespace Mixtape.Controllers
     [Produces("application/json")]
     [Route("api/Search")]
     [Authorize]
-    public class SearchController : Controller
+    [ApiController]
+    public class SearchController : ControllerBase
     {
         private readonly DataContext _context;
 

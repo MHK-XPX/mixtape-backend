@@ -8,7 +8,7 @@ A music meta-data catalog learning project.
 
 ## Stack
 
-- ASP.NET Core 2.0 - C#
+- ASP.NET Core 2.2 - C#
 - Entity Framework Core w/ MySQL
 
 ### Adapter Used
