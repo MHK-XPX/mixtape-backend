@@ -7,6 +7,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,16 +30,10 @@ namespace Mixtape
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var connectionString = string.IsNullOrEmpty(Configuration["ConnectionStrings:DATABASE"])
-                ? Environment.GetEnvironmentVariable("DATABASE")
-                : Configuration["ConnectionStrings:DATABASE"];
-
+            var connectionString = Configuration["ConnectionStrings:DATABASE"];
             services.AddDbContext<DataContext>(options => options.UseMySql(connectionString));
 
-            var secret = string.IsNullOrWhiteSpace(Configuration["AuthSettings:SECRET"])
-                ? Environment.GetEnvironmentVariable("SECRET")
-                : Configuration["AuthSettings:SECRET"];
-
+            var secret = Configuration["AuthSettings:SECRET"];
             services.Configure<AuthSetting>(authSetting => authSetting.SECRET = secret);
 
             var key = Encoding.UTF8.GetBytes(secret);
@@ -63,7 +58,7 @@ namespace Mixtape
 
             services.AddCors(options =>
             {
-                options.AddPolicy("AllowAll",
+                options.AddPolicy("AllowCredentialsAndAnyOriginMethodAndHeader",
                     builder =>
                     {
                         builder
@@ -77,18 +72,17 @@ namespace Mixtape
             services.AddSignalR();
 
             services.AddMvc()
-                .AddJsonOptions(
-                    options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-                );
+                .AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore)
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddSwaggerGen(c =>
+            services.AddSwaggerGen(options =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "Mixtape API", Version = "v1" });
+                options.SwaggerDoc("v1", new Info { Title = "Mixtape API", Version = "v1" });
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                c.IncludeXmlComments(xmlPath);
+                options.IncludeXmlComments(xmlPath);
 
-                c.AddSecurityDefinition("Bearer", new ApiKeyScheme
+                options.AddSecurityDefinition("Bearer", new ApiKeyScheme
                 {
                     In = "header",
                     Description = "Please enter JWT with Bearer into field (IE: Bearer <Auth Token here>)",
@@ -96,40 +90,31 @@ namespace Mixtape
                     Type = "apiKey",
                 });
 
-                c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>> {
+                options.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>> {
                     { "Bearer", Enumerable.Empty<string>() },
                 });
             });
-
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
-            {
                 app.UseDeveloperExceptionPage();
-            }
+            else
+                app.UseHsts();
 
-            app.UseCors("AllowAll");
-
-            app.UseAuthentication();
-
-            app.UseSignalR(routes =>
-            {
-                routes.MapHub<MessageHub>("/messagehub");
-            });
-
-            app.UseMvc();
-
-            app.UseSwagger();
-
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-                c.RoutePrefix = string.Empty;
-            });
+            app.UseCors("AllowCredentialsAndAnyOriginMethodAndHeader")
+                .UseHttpsRedirection()
+                .UseAuthentication()
+                .UseSignalR(routes => routes.MapHub<MessageHub>("/messagehub"))
+                .UseMvc()
+                .UseSwagger()
+                .UseSwaggerUI(options =>
+                {
+                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                    options.RoutePrefix = string.Empty;
+                });
         }
     }
 }

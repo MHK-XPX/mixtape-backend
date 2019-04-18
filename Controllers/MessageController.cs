@@ -10,7 +10,8 @@ namespace Mixtape.Controllers
     [Produces("application/json")]
     [Route("api/Messages")]
     [Authorize]
-    public class MessageController : Controller
+    [ApiController]
+    public class MessageController : ControllerBase
     {
         private readonly DataContext _context;
 
